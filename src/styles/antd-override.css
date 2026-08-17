@@ -1,0 +1,18 @@
+.ant-input:focus,
+.ant-input-focused {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #d9d9d9 !important;
+}
+
+.ant-image {
+  width: 100%;
+}
+
+.ant-image-mask {
+  display: none !important;
+}
+
+.ant-image:hover .ant-image-mask {
+  opacity: 0 !important;
+}
