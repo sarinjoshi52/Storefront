@@ -20,3 +20,13 @@ export interface LoginDTO {
   email: string;
   password: string;
 }
+
+export interface GetMeResponse {
+  customer: {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    address: string;
+  };
+}

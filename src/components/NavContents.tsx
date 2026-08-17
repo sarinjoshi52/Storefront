@@ -4,15 +4,20 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, message, type MenuProps } from "antd";
+import { Avatar, Button, Dropdown, message, Space, type MenuProps } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetMe } from "../hooks/useCustomer";
 
 const NavContents = () => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(
     !!localStorage.getItem("accessToken")
   );
+  const { data, isLoading } = useGetMe();
+
+  const customer = data?.data?.customer;
+  console.log(customer);
 
   const dropDownItems: MenuProps["items"] = [
     {
@@ -87,11 +92,16 @@ const NavContents = () => {
             <Button
               size="large"
               type="text"
-              className="font-bold! font-Montserrat! "
+              loading={isLoading}
+              className="font-Montserrat!"
             >
-              <Avatar size={32} icon={<UserOutlined />} />
-              User Name
-              <DownOutlined />
+              <Space size="medium" align="center">
+                <Avatar size={32} icon={<UserOutlined />} />
+                <div className="flex flex-row items-center gap-1">
+                  {customer?.name}
+                  {/* <DownOutlined className="text-xs!" /> */}
+                </div>
+              </Space>
             </Button>
           </Dropdown>
         ) : (

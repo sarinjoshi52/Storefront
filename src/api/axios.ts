@@ -21,7 +21,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const response = await axiosInstance.post("/auth/refresh");
+        const response = await axiosInstance.post("/auth/storefront/refresh");
 
         const newAccessToken = response.data.accessToken;
 
@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
       } catch (err) {
         localStorage.removeItem("accessToken");
 
-        window.location.href = "/signin";
+        window.location.href = "/login";
 
         return Promise.reject(err);
       }
