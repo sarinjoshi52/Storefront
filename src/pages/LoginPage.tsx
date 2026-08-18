@@ -64,19 +64,30 @@ const LoginPage = () => {
         </div>
 
         <Form.Item
-          help={null}
           key="email"
           name="email"
-          label="Email"
-          className="font-bold"
+          label={<span className="font-bold font-Montserrat">Email</span>}
+          className="font-Montserrat! text-start!"
+          rules={[
+            {
+              required: true,
+              message: "Email is required",
+            },
+          ]}
         >
           <Input size="large" className="font-medium" onChange={handleChange} />
         </Form.Item>
         <Form.Item
           key="password"
           name="password"
-          label="Password"
-          className="font-bold"
+          label={<span className="font-bold font-Montserrat">Password</span>}
+          className="font-Montserrat! text-start!"
+          rules={[
+            {
+              required: true,
+              message: "Password is required",
+            },
+          ]}
         >
           <Input.Password
             size="large"

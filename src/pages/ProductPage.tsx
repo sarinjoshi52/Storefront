@@ -6,11 +6,13 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import "./../styles/richtext.css";
 import "./../styles/antd-override.css";
 import DOMPurify from "dompurify";
+import { useAddToCart } from "../hooks/useCart";
 
 const ProductPage = () => {
   const { productId } = useParams();
   const { data, isLoading } = useGetOneProduct(productId);
   const [quantity, setQuantity] = useState<number>(1);
+  const addToCart = useAddToCart();
 
   const decQuantity = () => {
     setQuantity((prev) => Math.max(1, prev - 1));
@@ -28,6 +30,10 @@ const ProductPage = () => {
   if (isLoading) {
     return <span>Loading...</span>;
   }
+
+  const handleAddToCart = (productId: string, quantity: number) => {
+    addToCart.mutate({ productId, quantity });
+  };
 
   return (
     <div className="flex flex-col gap-5 text-start pb-10">
@@ -94,6 +100,7 @@ const ProductPage = () => {
                   type="primary"
                   block
                   size="large"
+                  onClick={() => handleAddToCart(product._id, quantity)}
                   icon={<ShoppingCartOutlined />}
                   className="bg-red-500! border-red-400! rounded-md py-5 hover:bg-red-800! hover:border-red-800! hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                 >
@@ -113,7 +120,7 @@ const ProductPage = () => {
         </Col>
       </Row>
 
-      <div>
+      <div className="flex flex-col gap-5">
         <span className="text-black font-Montserrat text-xl font-bold">
           About
         </span>

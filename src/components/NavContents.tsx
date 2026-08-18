@@ -8,16 +8,19 @@ import { Avatar, Button, Dropdown, message, Space, type MenuProps } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetMe } from "../hooks/useCustomer";
+import CartDrawer from "./CartDrawer";
+import { useQueryClient } from "@tanstack/react-query";
+import { logout } from "../services/customer.services";
 
 const NavContents = () => {
+  const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState(
+  const [loggedIn, setLoggedIn] = useState<any>(
     !!localStorage.getItem("accessToken")
   );
   const { data, isLoading } = useGetMe();
 
   const customer = data?.data?.customer;
-  console.log(customer);
 
   const dropDownItems: MenuProps["items"] = [
     {
@@ -27,11 +30,20 @@ const NavContents = () => {
     },
   ];
 
-  const handleClick: MenuProps["onClick"] = ({ key }) => {
+  const queryClient = useQueryClient();
+
+  const handleClick: MenuProps["onClick"] = async ({ key }) => {
     if (key === "logout") {
-      localStorage.removeItem("accessToken");
-      setLoggedIn(false);
-      message.success("Logout successful");
+      try {
+        await logout();
+        queryClient.clear();
+        localStorage.removeItem("accessToken");
+        setLoggedIn(false);
+        message.success("Logout successful");
+      } catch (error) {
+        console.error(error);
+        message.error("Logout failed");
+      }
     }
   };
 
@@ -80,6 +92,7 @@ const NavContents = () => {
       <div className="flex flex-row gap-5 items-center">
         <Button
           type="text"
+          onClick={() => setOpen(true)}
           icon={<ShoppingCartOutlined className="text-lg!" />}
         />
 
@@ -99,7 +112,7 @@ const NavContents = () => {
                 <Avatar size={32} icon={<UserOutlined />} />
                 <div className="flex flex-row items-center gap-1">
                   {customer?.name}
-                  {/* <DownOutlined className="text-xs!" /> */}
+                  <DownOutlined className="text-xs!" />
                 </div>
               </Space>
             </Button>
@@ -117,6 +130,7 @@ const NavContents = () => {
           </Button>
         )}
       </div>
+      <CartDrawer open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };

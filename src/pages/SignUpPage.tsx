@@ -8,6 +8,7 @@ import type { SignUpDTO } from "../types/customer.type";
 const SignUpPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+
   const signUpMutation = useMutation({
     mutationFn: signUp,
     onSuccess: (res) => {
@@ -16,11 +17,12 @@ const SignUpPage = () => {
       navigate("/");
     },
     onError: (error) => {
+      console.log(error);
       if (axios.isAxiosError(error)) {
         if (error.response?.data?.message) {
           form.setFields([
             {
-              name: "email",
+              name: error.response?.data?.field,
               errors: [error.response?.data?.message],
             },
           ]);
@@ -57,40 +59,65 @@ const SignUpPage = () => {
           <Row gutter={[24, 0]}>
             <Col md={24}>
               <Form.Item
-                label="Name"
+                label={<span className="font-bold! font-Montserrat">Name</span>}
                 key="name"
                 name="name"
-                className="font-bold!"
+                className="text-start!"
               >
                 <Input size="large" className="font-medium!" />
               </Form.Item>
             </Col>
             <Col md={24}>
               <Form.Item
-                label="Email"
+                label={
+                  <span className="font-bold! font-Montserrat">Email</span>
+                }
                 key="email"
                 name="email"
-                className="font-bold!"
+                className="text-start!"
               >
                 <Input size="large" className="font-medium!" />
               </Form.Item>
             </Col>
             <Col md={24}>
               <Form.Item
-                label="Password"
+                label={
+                  <span className="font-bold! font-Montserrat">Password</span>
+                }
                 key="password"
                 name="password"
-                className="font-bold!"
+                className="text-start!"
               >
                 <Input.Password size="large" className="font-medium!" />
               </Form.Item>
             </Col>
             <Col md={24}>
               <Form.Item
-                label="Confirm Password"
+                label={
+                  <span className="font-bold! font-Montserrat">
+                    Confirm Password
+                  </span>
+                }
                 key="confirmPassword"
                 name="confirmPassword"
-                className="font-bold!"
+                className="text-start!"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please confirm your password",
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+
+                      return Promise.reject(
+                        new Error("Passwords do not match")
+                      );
+                    },
+                  }),
+                ]}
               >
                 <Input.Password size="large" className="font-medium!" />
               </Form.Item>

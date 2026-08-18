@@ -3,6 +3,7 @@ import type {
   AuthResponse,
   GetMeResponse,
   LoginDTO,
+  LogoutResponse,
   SignUpDTO,
 } from "../types/customer.type";
 import { axiosInstance } from "../api/axios";
@@ -15,6 +16,10 @@ export const signUp = (
 
 export const login = (data: LoginDTO): Promise<AxiosResponse<AuthResponse>> => {
   return axiosInstance.post(`/auth/storefront/login`, data);
+};
+
+export const logout = (): Promise<AxiosResponse<LogoutResponse>> => {
+  return axiosInstance.post(`auth/storefront/logout`);
 };
 
 export const getMe = (): Promise<AxiosResponse<GetMeResponse>> => {

@@ -16,6 +16,10 @@ export interface AuthResponse {
   accessToken: string;
 }
 
+export interface LogoutResponse {
+  message: string;
+}
+
 export interface LoginDTO {
   email: string;
   password: string;

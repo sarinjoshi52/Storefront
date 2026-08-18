@@ -5,5 +5,6 @@ export function useGetMe() {
   return useQuery({
     queryKey: ["getMe"],
     queryFn: getMe,
+    enabled: !!localStorage.getItem("accessToken"),
   });
 }
