@@ -31,11 +31,6 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Never refresh the refresh request
-    if (originalRequest.url?.includes("/auth/storefront/refresh")) {
-      return Promise.reject(error);
-    }
-
     // Only handle 401
     if (error.response?.status !== 401) {
       return Promise.reject(error);

@@ -11,3 +11,17 @@
 .ProseMirror-output li {
   margin: 0.25rem 0;
 }
+
+.rich-content p {
+  margin-bottom: 16px;
+}
+
+.rich-content ul,
+.rich-content ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.rich-content li {
+  margin-bottom: 6px;
+}

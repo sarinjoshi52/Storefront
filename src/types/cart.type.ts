@@ -29,3 +29,11 @@ export interface getCartResponse {
     ];
   };
 }
+
+export type removeFromCartResponse = AddToCartResponse;
+
+export interface updateCartDTO {
+  productId: string;
+  change: number;
+}
+export type updateCartResponse = AddToCartResponse;

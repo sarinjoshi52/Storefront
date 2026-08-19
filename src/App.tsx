@@ -19,6 +19,10 @@ function App() {
             colorPrimaryActive: "none",
             colorPrimaryHover: "none",
           },
+          Listy: {
+            controlItemBgHover: "none",
+            lineType: "none",
+          },
         },
       }}
     >

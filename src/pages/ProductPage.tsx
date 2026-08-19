@@ -124,11 +124,11 @@ const ProductPage = () => {
         <span className="text-black font-Montserrat text-xl font-bold">
           About
         </span>
-        <p
+        <div
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(product.description),
           }}
-          className="text-black text-sm font-Montserrat text-justify prose ProseMirror-output"
+          className="text-black text-sm font-Montserrat text-justify prose ProseMirror-output rich-content"
         />
       </div>
     </div>
