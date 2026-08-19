@@ -5,7 +5,6 @@ import type {
   getCartResponse,
 } from "../types/cart.type";
 import { axiosInstance } from "../api/axios";
-import { useState } from "react";
 
 export const addToCart = (
   data: CartDTO
