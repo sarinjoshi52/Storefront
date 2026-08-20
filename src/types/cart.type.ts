@@ -34,6 +34,6 @@ export type removeFromCartResponse = AddToCartResponse;
 
 export interface updateCartDTO {
   productId: string;
-  change: number;
+  change: 1 | -1;
 }
 export type updateCartResponse = AddToCartResponse;

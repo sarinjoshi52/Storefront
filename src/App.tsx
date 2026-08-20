@@ -23,6 +23,12 @@ function App() {
             controlItemBgHover: "none",
             lineType: "none",
           },
+          Radio: {
+            buttonSolidCheckedBg: "#E82E2E",
+            buttonSolidCheckedHoverBg: "#E82E2E",
+            buttonSolidCheckedColor: "#fff",
+            buttonSolidCheckedActiveBg: "#e85a5a",
+          },
         },
       }}
     >

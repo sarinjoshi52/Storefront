@@ -6,3 +6,4 @@ export const NotFound = React.lazy(() => import("../pages/NotFound"));
 export const ProductPage = React.lazy(() => import("../pages/ProductPage"));
 export const LoginPage = React.lazy(() => import("../pages/LoginPage"));
 export const SignUpPage = React.lazy(() => import("../pages/SignUpPage"));
+export const CheckoutPage = React.lazy(() => import("../pages/CheckoutPage"));

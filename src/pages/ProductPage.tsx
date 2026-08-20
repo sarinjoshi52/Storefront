@@ -1,5 +1,5 @@
 import { Button, Carousel, Col, Divider, Image, Row } from "antd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetOneProduct } from "../hooks/useProduct";
 import { useState } from "react";
 import { ShoppingCartOutlined } from "@ant-design/icons";
@@ -10,6 +10,7 @@ import { useAddToCart } from "../hooks/useCart";
 
 const ProductPage = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
   const { data, isLoading } = useGetOneProduct(productId);
   const [quantity, setQuantity] = useState<number>(1);
   const addToCart = useAddToCart();
@@ -32,6 +33,8 @@ const ProductPage = () => {
   }
 
   const handleAddToCart = (productId: string, quantity: number) => {
+    if (!localStorage.getItem("accessToken")) {
+    }
     addToCart.mutate({ productId, quantity });
   };
 
@@ -111,6 +114,7 @@ const ProductPage = () => {
                   block
                   size="large"
                   className="inline-block w-full rounded-md py-2 text-red-500! border-red-500!  cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                  onClick={() => navigate(`/checkout/${product._id}`)}
                 >
                   Buy Now
                 </Button>

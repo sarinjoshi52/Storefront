@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import {
+  CheckoutPage,
   HomePage,
   LoginPage,
   NotFound,
@@ -16,7 +17,14 @@ export const router = createBrowserRouter([
     element: <StoreLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/products/:productId", element: <ProductPage /> },
+      {
+        path: "products/:productId",
+        element: <ProductPage />,
+      },
+      {
+        path: "checkout/:productId?",
+        element: <CheckoutPage />,
+      },
     ],
   },
   {

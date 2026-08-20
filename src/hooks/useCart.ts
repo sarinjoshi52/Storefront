@@ -57,18 +57,69 @@ export function useRemoveFromCart() {
 
 export function useUpdateCart() {
   const queryClient = useQueryClient();
+
   return useMutation({
-    mutationKey: ["updateCard"],
+    mutationKey: ["updateCart"],
+
     mutationFn: (data: updateCartDTO) => updateCart(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cartItem"] });
+
+    onMutate: async ({ productId, change }) => {
+      // Cancel an ongoing cart request
+      await queryClient.cancelQueries({
+        queryKey: ["cartItem"],
+      });
+
+      // Save the current cart as a backup
+      const previousCart = queryClient.getQueryData(["cartItem"]);
+
+      // Optimistically update the cache
+      queryClient.setQueryData(["cartItem"], (oldData: any) => {
+        console.log(oldData);
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          data: {
+            ...oldData.data,
+            cart: {
+              ...oldData.data.cart,
+              items: oldData.data.cart.items.map((item: any) => {
+                if (item.productId._id === productId) {
+                  return {
+                    ...item,
+                    quantity: item.quantity + change,
+                  };
+                }
+
+                return item;
+              }),
+            },
+          },
+        };
+      });
+
+      // This gets passed to onError
+      return { previousCart };
     },
-    onError: (error) => {
+
+    onError: (error, _variables, context) => {
+      // Rollback
+      if (context?.previousCart) {
+        queryClient.setQueryData(["cartItem"], context.previousCart);
+      }
+
       if (axios.isAxiosError(error)) {
         message.error(error.response?.data?.message ?? "Something went wrong!");
       } else {
         message.error("Something went wrong");
       }
+    },
+
+    onSettled: () => {
+      // Synchronize with backend
+      queryClient.invalidateQueries({
+        queryKey: ["cartItem"],
+      });
     },
   });
 }

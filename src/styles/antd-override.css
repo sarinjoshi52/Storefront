@@ -16,3 +16,9 @@
 .ant-image:hover .ant-image-mask {
   opacity: 0 !important;
 }
+
+.checkout-radio {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+}

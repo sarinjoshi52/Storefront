@@ -52,10 +52,6 @@ const NavContents = () => {
       path: "/",
       name: "Home",
     },
-    {
-      path: "/contact",
-      name: "Contact",
-    },
   ];
 
   return (
